@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="flex flex-col items-start justify-start min-h-screen bg-[#231010] p-10">
+  <h1 class="text-white text-3xl font-bold mb-6">Welcome {{ request.user.first_name }} (Manager)</h1>
+
+  <div class="w-full flex flex-wrap gap-6">
+
+    <!-- Card: Create Employee -->
+    <div class="bg-[#2d1a1a] text-white p-6 rounded-xl shadow-md w-80">
+      <h2 class="text-xl font-semibold mb-2">Create New Employee</h2>
+      <p class="text-sm text-[#cc8e8e] mb-4">Add a new employee to your team.</p>
+      <a href="{% url 'create_employee' %}" class="block bg-[#6a2f2f] hover:bg-[#883838] text-center text-white py-2 rounded-md">
+        ➕ Add Employee
+      </a>
+    </div>
+
+    <!-- Card: View Employees -->
+    <div class="bg-[#2d1a1a] text-white p-6 rounded-xl shadow-md w-80">
+      <h2 class="text-xl font-semibold mb-2">View Employees</h2>
+      <p class="text-sm text-[#cc8e8e] mb-4">Check the list of current employees.</p>
+      <a href="#" class="block bg-[#6a2f2f] hover:bg-[#883838] text-center text-white py-2 rounded-md">
+        👥 View Employees
+      </a>
+    </div>
+
+    <!-- Card: Inventory (مستقبلاً) -->
+    <div class="bg-[#2d1a1a] text-white p-6 rounded-xl shadow-md w-80">
+      <h2 class="text-xl font-semibold mb-2">Inventory</h2>
+      <p class="text-sm text-[#cc8e8e] mb-4">Manage and track your inventory here.</p>
+      <a href="#" class="block bg-[#6a2f2f] hover:bg-[#883838] text-center text-white py-2 rounded-md">
+        📦 Go to Inventory
+      </a>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

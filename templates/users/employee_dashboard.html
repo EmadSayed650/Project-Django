@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div class="p-8 text-white">
+    <h1 class="text-2xl font-bold mb-4">Welcome {{ request.user.username }}</h1>
+    <p class="text-yellow-400">You are logged in as an Employee.</p>
+    <!-- ممكن تضيف مهامه اليومية أو المنتجات المطلوبة منه -->
+  </div>
+{% endblock %}
