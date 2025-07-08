@@ -1,0 +1,33 @@
+<!-- templates/user/main_dashboard.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Main Dashboard{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+</head>
+
+<body class="bg-[#231010] text-white font-sans min-h-screen">
+    <div class="flex">
+        <!-- Sidebar -->
+        <aside class="w-64 min-h-screen bg-[#4a2121] p-4">
+            <h2 class="text-xl font-bold mb-6">Stokky Dashboard</h2>
+            <nav class="flex flex-col gap-3">
+                <a href="{% url 'order_list' %}" class="text-white">Orders</a>
+                <a href="#" class="text-white">Shipments</a>
+                <a href="#" class="text-white">Inventory</a>
+                <a href="#" class="text-white">Logout</a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-6">
+            {% block content %}
+            <!-- Page-specific content will go here -->
+            {% endblock %}
+        </main>
+    </div>
+</body>
+
+</html>
