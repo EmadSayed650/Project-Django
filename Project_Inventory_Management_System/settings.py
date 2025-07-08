@@ -36,6 +36,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 INSTALLED_APPS = [
     'widget_tweaks',
     'users.apps.UsersConfig',
+    'orders.apps.OrdersConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
