@@ -11,14 +11,33 @@
         </tr>
     </thead>
     <tbody class="divide-y divide-gray-700">
-        {% for order in orders %}
+        {% for page_obj in page_obj %}
         <tr>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">{{ order.id }}</td>
-            <!-- <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">{{ order. }}</td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">{{ order.total_amount }}</td> -->
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">{{ order.status }}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">{{ page_obj.order_id }}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">{{ page_obj.supermarket }}</td>
+           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">{{ page_obj.created_by }}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">{{ page_obj.order_date }}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">{{ page_obj.status }}</td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
+
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">First</a>
+            <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+        {% endif %}
+
+        <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">Next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+        {% endif %}
+    </span>
+</div>
+
 {% endblock %}

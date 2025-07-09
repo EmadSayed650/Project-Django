@@ -14,10 +14,27 @@
         <aside class="w-64 min-h-screen bg-[#4a2121] p-4">
             <h2 class="text-xl font-bold mb-6">Stokky Dashboard</h2>
             <nav class="flex flex-col gap-3">
-                <a href="{% url 'order_list' %}" class="text-white">Orders</a>
-                <a href="#" class="text-white">Shipments</a>
-                <a href="#" class="text-white">Inventory</a>
-                <a href="#" class="text-white">Logout</a>
+
+                <a href="{% url 'order_list' %}" class="flex items-center gap-3 px-3 py-2">
+                    <div class="text-white">📦</div>
+                    <p class="text-white text-sm">Orders</p>
+                </a>
+
+                <a href="#" class="flex items-center gap-3 px-3 py-2">
+                    <div class="text-white">🚚</div>
+                    <p class="text-white text-sm">Shipments</p>
+                </a>
+
+                <a href="#" class="flex items-center gap-3 px-3 py-2">
+                    <div class="text-white">⚙️</div>
+                    <p class="text-white text-sm">Settings</p>
+                </a>
+
+                <a href="{% url 'logout' %}" class="flex items-center gap-3 px-3 py-2">
+                    <div class="text-white">↩️</div>
+                    <p class="text-white text-sm">Logout</p>
+                </a>
+
             </nav>
         </aside>
 
