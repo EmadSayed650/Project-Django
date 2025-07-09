@@ -2,13 +2,11 @@
 {% block content %}
 <div class="flex flex-col gap-6 text-white">
 
-  <!-- عنوان الترحيب -->
   <div class="bg-[#2d1a1a] p-6 rounded-xl shadow-lg">
     <h1 class="text-3xl font-bold mb-2">Welcome, {{ request.user.username }}</h1>
     <p class="text-yellow-300 text-sm">You are logged in as an <span class="font-semibold">Employee</span>.</p>
   </div>
 
-  <!-- المهام اليومية -->
   <div class="bg-[#2d1a1a] p-6 rounded-xl shadow-md">
     <h2 class="text-xl font-semibold mb-4 text-[#f8e0a3]">Your Daily Tasks</h2>
     <ul class="list-disc pl-5 text-sm space-y-2">
@@ -19,7 +17,6 @@
     </ul>
   </div>
 
-  <!-- المنتجات المطلوبة -->
   <div class="bg-[#2d1a1a] p-6 rounded-xl shadow-md">
     <h2 class="text-xl font-semibold mb-4 text-[#f8e0a3]">Assigned Products / Orders</h2>
     <p class="text-sm text-gray-300">No assigned orders yet. Please check back later or contact your manager.</p>

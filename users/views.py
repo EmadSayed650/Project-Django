@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import EmployeeCreationForm
-from .models import CustomUser  # تأكد إنك مستورد CustomUser
+from .models import CustomUser  
 
 
 def login_view(request):
@@ -58,7 +58,7 @@ def create_employee_view(request):
 @login_required
 def view_employees(request):
     if request.user.role != 'manager':
-        return render(request, 'users/unauthorized.html')  # لو مش مدير يظهر صفحة رفض
+        return render(request, 'users/unauthorized.html')  
 
     employees = CustomUser.objects.filter(role='employee')
     return render(request, 'users/view_employees.html', {'employees': employees})
