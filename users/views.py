@@ -4,6 +4,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import EmployeeCreationForm
+from .models import CustomUser  
+
 
 def login_view(request):
     if request.method == 'POST':
@@ -50,3 +52,14 @@ def create_employee_view(request):
         form = EmployeeCreationForm()
 
     return render(request, 'users/create_employee.html', {'form': form})
+
+
+
+@login_required
+def view_employees(request):
+    if request.user.role != 'manager':
+        return render(request, 'users/unauthorized.html')  
+
+    employees = CustomUser.objects.filter(role='employee')
+    return render(request, 'users/view_employees.html', {'employees': employees})
+
