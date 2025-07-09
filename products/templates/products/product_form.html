@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<h1 class="text-2xl font-bold text-white mb-4">Add / Edit Product</h1>
+
+<form method="post" class="bg-[#3a1c1c] p-6 rounded-lg shadow-lg max-w-md">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <div class="flex gap-2 mt-4">
+        <button type="submit"
+                class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">
+            Save
+        </button>
+        <a href="{% url 'product_list' %}"
+           class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700">
+            Cancel
+        </a>
+    </div>
+</form>
+{% endblock %}
+
