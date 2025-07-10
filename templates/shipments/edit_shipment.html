@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+<div class="flex items-center justify-center min-h-screen bg-[#231010]">
+  <div class="bg-[#2d1a1a] p-8 rounded-xl w-full max-w-md shadow-md">
+    <h2 class="text-white text-2xl font-bold mb-4">Edit Shipment</h2>
+
+    {% if messages %}
+      {% for message in messages %}
+        <div class="text-yellow-400 mb-2">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+
+    <form method="POST" class="space-y-4">
+      {% csrf_token %}
+      <div>
+        <label for="factory_name" class="block text-sm text-gray-300 mb-1">Factory Name</label>
+        {% render_field form.factory_name class="w-full p-2 rounded-md bg-[#3a1f1f] text-white border border-gray-600 focus:outline-none" %}
+      </div>
+
+      <div>
+        <label for="item_name" class="block text-sm text-gray-300 mb-1">Item Name</label>
+        {% render_field form.item_name class="w-full p-2 rounded-md bg-[#3a1f1f] text-white border border-gray-600 focus:outline-none" %}
+      </div>
+
+      <div>
+        <label for="quantity" class="block text-sm text-gray-300 mb-1">Quantity</label>
+        {% render_field form.quantity class="w-full p-2 rounded-md bg-[#3a1f1f] text-white border border-gray-600 focus:outline-none" %}
+      </div>
+
+      <div>
+        <label for="shipment_date" class="block text-sm text-gray-300 mb-1">Shipment Date</label>
+        {% render_field form.shipment_date class="w-full p-2 rounded-md bg-[#3a1f1f] text-white border border-gray-600 focus:outline-none" %}
+      </div>
+
+      <button type="submit" class="w-full bg-[#6a2f2f] hover:bg-[#883838] text-white py-2 rounded-md transition">
+        Update Shipment
+      </button>
+    </form>
+  </div>
+</div>
+{% endblock %}
