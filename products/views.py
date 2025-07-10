@@ -36,7 +36,6 @@ def product_list(request):
 # إضافة منتج جديد (للمدير فقط)
 # =======================
 @login_required
-# @user_passes_test(is_manager)
 def product_create(request):
     if request.method == 'POST':
         form = ProductForm(request.POST)
@@ -45,7 +44,13 @@ def product_create(request):
             # AJAX Response
             if request.headers.get('x-requested-with') == 'XMLHttpRequest':
                 return JsonResponse({'success': True})
-            return redirect('manager_inventory')
+            
+            # رجع المدير أو الموظف حسب نوعه
+            if request.user.is_staff:  # لو مدير
+                return redirect('manager_inventory')
+            else:  # لو موظف
+                return redirect('employee_inventory')
+                
     return JsonResponse({'success': False, 'error': 'Invalid request'})
 
 
