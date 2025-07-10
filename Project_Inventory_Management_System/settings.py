@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'products.apps.ProductsConfig',
     'users.apps.UsersConfig',
+    'shipments.apps.ShipmentsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

@@ -57,17 +57,16 @@
 
                                 <!-- Shipments -->
                                 {% if request.user.role == 'manager' %}
-                                    <a href="{% url 'manager_shipments' %}"  class="flex items-center gap-3 px-3 py-2 rounded-xl {% if request.path == '/manager/shipments/' %}bg-[#4a2121]{% endif %}">
+                                    <a href="{% url 'shipments:shipment_list' %}" class="flex items-center gap-3 px-3 py-2 rounded-xl {% if request.path == '/manager/shipments/' %}bg-[#4a2121]{% endif %}">
                                         <div class="text-white">🚚</div>
                                         <p class="text-white text-sm">Shipments</p>
                                     </a>
                                 {% elif request.user.role == 'employee' %}
-                                    <a href="{% url 'employee_shipments' %}" class="flex items-center gap-3 px-3 py-2 rounded-xl {% if request.path == '/employee/shipments/' %}bg-[#4a2121]{% endif %}">
+                                    <a href="{% url 'shipments:shipment_list' %}" class="flex items-center gap-3 px-3 py-2 rounded-xl {% if request.path == '/employee/shipments/' %}bg-[#4a2121]{% endif %}">
                                         <div class="text-white">🚚</div>
                                         <p class="text-white text-sm">Shipments</p>
                                     </a>
                                 {% endif %}
-
                                 <!-- Inventory -->
                                 {% if request.user.role == 'manager' %}
                                 <a href="{% url 'manager_inventory' %}"
