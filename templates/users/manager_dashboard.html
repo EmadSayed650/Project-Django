@@ -25,6 +25,60 @@
     </div>
 
     <!-- Card: Inventory -->
+    <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 w-full">
+      <a href="{% url 'manager_orders' %}" class="bg-[#4a2121] hover:bg-[#5b2a2a] p-6 rounded-xl text-center shadow-md transition">
+        <h2 class="text-xl font-semibold mb-2">📦 Orders</h2>
+        <p class="text-sm text-gray-300">View your assigned orders.</p>
+      </a>
+
+      <a href="{% url 'manager_shipments' %}" class="bg-[#4a2121] hover:bg-[#5b2a2a] p-6 rounded-xl text-center shadow-md transition">
+        <h2 class="text-xl font-semibold mb-2">🚚 Shipments</h2>
+        <p class="text-sm text-gray-300">Track shipments you're responsible for.</p>
+      </a>
+
+      <a href="{% url 'manager_inventory' %}" class="bg-[#4a2121] hover:bg-[#5b2a2a] p-6 rounded-xl text-center shadow-md transition">
+        <h2 class="text-xl font-semibold mb-2">📊 Inventory (Manager)</h2>
+        <p class="text-sm text-gray-300">View available stock items with management tools.</p>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}
+
+
+
+
+
+
+{% comment %} {% extends 'base.html' %}
+{% block content %}
+
+<div class="flex flex-col items-start justify-start min-h-screen bg-[#231010] p-10">
+  <h1 class="text-white text-3xl font-bold mb-6">Welcome {{ request.user.first_name }} (Manager)</h1>
+
+  <div class="w-full flex flex-wrap gap-6">
+
+    <!-- Card: Create Employee -->
+    <div class="bg-[#2d1a1a] text-white p-6 rounded-xl shadow-md w-80">
+      <h2 class="text-xl font-semibold mb-2">Create New Employee</h2>
+      <p class="text-sm text-[#cc8e8e] mb-4">Add a new employee to your team.</p>
+      <a href="{% url 'create_employee' %}" class="block bg-[#6a2f2f] hover:bg-[#883838] text-center text-white py-2 rounded-md">
+        ➕ Add Employee
+      </a>
+    </div>
+
+    <!-- Card: View Employees -->
+    <div class="bg-[#2d1a1a] text-white p-6 rounded-xl shadow-md w-80">
+      <h2 class="text-xl font-semibold mb-2">View Employees</h2>
+      <p class="text-sm text-[#cc8e8e] mb-4">Check the list of current employees.</p>
+      <a href="{% url 'view_employees' %}" class="block bg-[#6a2f2f] hover:bg-[#883838] text-center text-white py-2 rounded-md">
+        👥 View Employees
+      </a>
+    </div>
+
+    <!-- Card: Inventory -->
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
       <a href="{% url 'manager_orders' %}" class="bg-[#4a2121] hover:bg-[#5b2a2a] p-6 rounded-xl text-center shadow-md transition">
         <h2 class="text-xl font-semibold mb-2">📦 Orders</h2>
@@ -45,4 +99,4 @@
   </div>
 </div>
 
-{% endblock %}
+{% endblock %} {% endcomment %}

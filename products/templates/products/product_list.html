@@ -43,14 +43,10 @@
                     <td class="px-4 py-3">{{ product.name }}</td>
                     <td class="px-4 py-3">{{ product.quantity }}</td>
                     <td class="px-4 py-3">{{ product.critical_amount }}</td>
-                    <td class="px-4 py-3 flex gap-2">
+                    <td class="px-4 py-3">
                         <a href="{% url 'product_update' product.pk %}"
                             class="bg-yellow-500 hover:bg-yellow-600 text-black font-medium px-3 py-1 rounded-xl transition">
                             Edit
-                        </a>
-                        <a href="{% url 'product_delete' product.pk %}"
-                            class="bg-red-600 hover:bg-red-700 text-white font-medium px-3 py-1 rounded-xl transition">
-                            Delete
                         </a>
                     </td>
                 </tr>
@@ -84,85 +80,3 @@
 
 </div>
 {% endblock %}
-
-
-
-
-
-
-
-
-
-
-
-{% comment %} {% extends "base.html" %}
-{% load static %}
-
-{% block content %}
-<h1 class="text-2xl font-bold text-white mb-4">Products</h1>
-
-<!-- Search Form -->
-<form method="get" class="flex gap-2 mb-4">
-    <input type="text" name="q" value="{{ search_query }}" placeholder="Search products..."
-        class="rounded-lg px-3 py-2 w-full text-black" />
-    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-lg">Search</button>
-    <a href="{% url 'product_create' %}" class="bg-green-600 text-white px-4 py-2 rounded-lg">Add New Product</a>
-</form>
-
-<!-- Table -->
-<div class="overflow-x-auto">
-    <table class="min-w-full bg-[#3a1c1c] rounded-lg">
-        <thead class="bg-[#4a2121] text-white">
-            <tr>
-                <th class="px-4 py-2 text-left">ID</th>
-                <th class="px-4 py-2 text-left">Name</th>
-                <th class="px-4 py-2 text-left">Quantity</th>
-                <th class="px-4 py-2 text-left">Critical Amount</th>
-                <th class="px-4 py-2 text-left">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for product in page_obj %}
-            <tr class="border-b border-[#cc8e8e] {% if product.quantity <= product.critical_amount %}bg-yellow-200{% endif %}">
-                <td class="px-4 py-2">{{ product.id }}</td>
-                <td class="px-4 py-2">{{ product.name }}</td>
-                <td class="px-4 py-2">{{ product.quantity }}</td>
-                <td class="px-4 py-2">{{ product.critical_amount }}</td>
-                <td class="px-4 py-2 flex gap-2">
-                    <a href="{% url 'product_update' product.pk %}"
-                        class="bg-yellow-400 text-black px-3 py-1 rounded-lg">Edit</a>
-                    <a href="{% url 'product_delete' product.pk %}"
-                        class="bg-red-500 text-white px-3 py-1 rounded-lg">Delete</a>
-                </td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="5" class="px-4 py-2 text-center text-red-400">No products found.</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
-
-<!-- Pagination -->
-<div class="mt-4 flex justify-between text-white">
-    {% if page_obj.has_previous %}
-        <a href="?q={{ search_query }}&page={{ page_obj.previous_page_number }}" class="hover:underline">Previous</a>
-    {% else %}
-        <span class="opacity-50">Previous</span>
-    {% endif %}
-
-    <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
-
-    {% if page_obj.has_next %}
-        <a href="?q={{ search_query }}&page={{ page_obj.next_page_number }}" class="hover:underline">Next</a>
-    {% else %}
-        <span class="opacity-50">Next</span>
-    {% endif %}
-</div>
-{% endblock %} {% endcomment %}
-
-
-
-
-
