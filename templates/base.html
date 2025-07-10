@@ -2,7 +2,6 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <title>Stokky</title>
@@ -18,21 +17,21 @@
         style='font-family: "Work Sans", "Noto Sans", sans-serif;'>
 
         <div class="layout-container flex h-full grow flex-col">
-            <!-- Sidebar and Navbar  -->
+            <!-- Sidebar / Navbar -->
             <div class="gap-1 px-6 flex flex-1 justify-center py-5">
                 <div class="layout-content-container flex flex-col w-80">
                     <div class="flex h-full min-h-[700px] flex-col justify-between bg-[#231010] p-4">
                         <div class="flex flex-col gap-4">
                             <div class="flex flex-col">
                                 <h1 class="text-white text-base font-medium leading-normal">StokkyPilot</h1>
-                                <p class="text-[#cc8e8e] text-sm font-normal leading-normal">Manager</p>
+                                <p class="text-[#cc8e8e] text-sm font-normal leading-normal">
+                                    {{ request.user.role|capfirst }}
+                                </p>
                             </div>
 
-                            
                             <div class="flex flex-col gap-2">
-                                <a href="{% url 'dashboard' %}" class="flex items-center gap-3 px-3 py-2 rounded-xl bg-[#4a2121]">
+                                <a href="{% url 'dashboard' %}" class="flex items-center gap-3 px-3 py-2 rounded-xl {% if request.path == '/dashboard/' %}bg-[#4a2121]{% endif %}">
                                     <div class="text-white">
-                                        <!-- Icon -->
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"
                                             fill="currentColor" viewBox="0 0 256 256">
                                             <path
@@ -42,26 +41,47 @@
                                     </div>
                                     <p class="text-white text-sm font-medium">Dashboard</p>
                                 </a>
-                               
-                                <a href="#" class="flex items-center gap-3 px-3 py-2">
-                                    <div class="text-white">📦</div>
-                                    <p class="text-white text-sm">Orders</p>
-                                </a>
-                                <a href="{% url 'product_list' %}" class="flex items-center gap-3 px-3 py-2 hover:bg-[#3a1c1c] rounded-xl transition">
-                                    <div class="text-white">🛒</div>
-                                    <p class="text-white text-sm font-medium">Products</p>
-                                </a>
-                                
-                                <a href="#" class="flex items-center gap-3 px-3 py-2">
-                                    <div class="text-white">🚚</div>
-                                    <p class="text-white text-sm">Shipments</p>
-                                </a>
 
-                                <a href="#" class="flex items-center gap-3 px-3 py-2">
-                                    <div class="text-white">⚙️</div>
-                                    <p class="text-white text-sm">Settings</p>
-                                </a>
+                                <!-- Orders -->
+                                {% if request.user.role == 'manager' %}
+                                    <a href="{% url 'manager_orders' %}"  class="flex items-center gap-3 px-3 py-2 rounded-xl {% if request.path == '/manager/orders/' %}bg-[#4a2121]{% endif %}">
+                                        <div class="text-white">📦</div>
+                                        <p class="text-white text-sm">Orders</p>
+                                    </a>
+                                {% elif request.user.role == 'employee' %}
+                                    <a href="{% url 'employee_orders' %}"  class="flex items-center gap-3 px-3 py-2 rounded-xl {% if request.path == '/employee/orders/' %}bg-[#4a2121]{% endif %}">
+                                        <div class="text-white">📦</div>
+                                        <p class="text-white text-sm">Orders</p>
+                                    </a>
+                                {% endif %}
 
+                                <!-- Shipments -->
+                                {% if request.user.role == 'manager' %}
+                                    <a href="{% url 'manager_shipments' %}"  class="flex items-center gap-3 px-3 py-2 rounded-xl {% if request.path == '/manager/shipments/' %}bg-[#4a2121]{% endif %}">
+                                        <div class="text-white">🚚</div>
+                                        <p class="text-white text-sm">Shipments</p>
+                                    </a>
+                                {% elif request.user.role == 'employee' %}
+                                    <a href="{% url 'employee_shipments' %}" class="flex items-center gap-3 px-3 py-2 rounded-xl {% if request.path == '/employee/shipments/' %}bg-[#4a2121]{% endif %}">
+                                        <div class="text-white">🚚</div>
+                                        <p class="text-white text-sm">Shipments</p>
+                                    </a>
+                                {% endif %}
+
+                                <!-- Inventory -->
+                                {% if request.user.role == 'manager' %}
+                                    <a href="{% url 'manager_inventory' %}" class="flex items-center gap-3 px-3 py-2 rounded-xl {% if request.path == '/manager/inventory/' %}bg-[#4a2121]{% endif %}">
+                                        <div class="text-white">📋</div>
+                                        <p class="text-white text-sm">Inventory</p>
+                                    </a>
+                                {% elif request.user.role == 'employee' %}
+                                    <a href="{% url 'employee_inventory' %}" class="flex items-center gap-3 px-3 py-2 rounded-xl {% if request.path == '/employee/inventory/' %}bg-[#4a2121]{% endif %}">
+                                        <div class="text-white">📋</div>
+                                        <p class="text-white text-sm">Inventory</p>
+                                    </a>
+                                {% endif %}
+
+                                <!-- Logout -->
                                 <a href="{% url 'logout' %}" class="flex items-center gap-3 px-3 py-2">
                                     <div class="text-white">↩️</div>
                                     <p class="text-white text-sm">Logout</p>
@@ -71,15 +91,12 @@
                     </div>
                 </div>
 
-              
                 <div class="layout-content-container flex flex-col max-w-[960px] flex-1 p-6">
                     {% block content %}
-
                     {% endblock %}
                 </div>
             </div>
         </div>
     </div>
 </body>
-
 </html>

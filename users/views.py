@@ -63,3 +63,28 @@ def view_employees(request):
     employees = CustomUser.objects.filter(role='employee')
     return render(request, 'users/view_employees.html', {'employees': employees})
 
+#  the employee pages 
+@login_required
+def employee_orders(request):
+    return render(request, 'users/employee_orders.html')
+
+@login_required
+def employee_shipments(request):
+    return render(request, 'users/employee_shipments.html')
+
+@login_required
+def employee_inventory(request):
+    return render(request, 'users/employee_inventory.html')
+
+#  the Manger pages 
+@login_required
+def manager_orders(request):
+    return render(request, 'users/manager_orders.html')
+
+@login_required
+def manager_shipments(request):
+    return render(request, 'users/manager_shipments.html')
+
+@login_required
+def manager_inventory(request):
+    return render(request, 'users/manager_inventory.html')
