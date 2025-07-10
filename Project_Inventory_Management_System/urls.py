@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/', include('users.urls')),
     path('', include('users.urls')),
+    path('products/', include('products.urls')),
 ]
 from django.conf import settings
 from django.conf.urls.static import static
