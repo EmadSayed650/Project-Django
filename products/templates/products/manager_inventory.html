@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="p-8 text-white">
+    <h1 class="text-3xl font-bold mb-6">Inventory (Manager View)</h1>
+
+    
+    <div class="flex justify-between items-center mb-4">
+        <form method="GET" class="flex gap-2">
+            <input type="text" name="q" placeholder="Search products..." value="{{ search_query }}"
+                   class="p-2 rounded text-black" />
+            <button type="submit" class="bg-[#4a2121] px-4 py-2 rounded">Search</button>
+        </form>
+        <button type="button" onclick="openProductModal()" class="bg-green-600 px-4 py-2 rounded text-white hover:bg-green-700">
+            + Add New Product
+        </button>
+    </div>
+
+   
+    <div class="overflow-x-auto bg-[#2c1a1a] p-4 rounded-2xl shadow-lg mb-6">
+        <table class="min-w-full text-white rounded-xl">
+            <thead class="bg-[#4a2121]">
+                <tr>
+                    <th class="px-4 py-3 text-left">ID</th>
+                    <th class="px-4 py-3 text-left">Name</th>
+                    <th class="px-4 py-3 text-left">Quantity</th>
+                    <th class="px-4 py-3 text-left">Critical Amount</th>
+                    <th class="px-4 py-3 text-left">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in page_obj %}
+                <tr>
+                    <td class="px-4 py-3">{{ product.id }}</td>
+                    <td class="px-4 py-3">{{ product.name }}</td>
+                    <td class="px-4 py-3">{{ product.quantity }}</td>
+                    <td class="px-4 py-3">{{ product.critical_amount }}</td>
+                    <td class="px-4 py-3">
+                        <button type="button" onclick="openProductModal({{ product.id }})"
+                                class="text-blue-400 hover:underline">Edit</button>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="text-center py-4 text-red-400">No products available.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination flex gap-2 justify-center mb-6">
+        {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}&q={{ search_query }}"
+           class="px-3 py-1 bg-gray-700 rounded">Previous</a>
+        {% endif %}
+        <span class="px-3 py-1">{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span>
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}&q={{ search_query }}"
+           class="px-3 py-1 bg-gray-700 rounded">Next</a>
+        {% endif %}
+    </div>
+
+ 
+    <h2 class="text-xl font-semibold mb-3">Pending Product Requests</h2>
+    <table class="min-w-full text-white rounded-xl">
+        <thead class="bg-[#4a2121]">
+            <tr>
+                <th class="px-4 py-3 text-left">Product</th>
+                <th class="px-4 py-3 text-left">Employee</th>
+                <th class="px-4 py-3 text-left">Quantity</th>
+                <th class="px-4 py-3 text-left">Requested On</th>
+                <th class="px-4 py-3 text-left">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for req in pending_requests %}
+            <tr>
+                <td class="px-4 py-3">{{ req.product.name }}</td>
+                <td class="px-4 py-3">{{ req.employee.get_full_name }}</td>
+                <td class="px-4 py-3">{{ req.quantity }}</td>
+                <td class="px-4 py-3">{{ req.created_at|date:"M d, Y" }}</td>
+                <td class="px-4 py-3">
+                    <a href="{% url 'approve_request' req.id %}"
+                       class="text-green-400 hover:underline mr-2">Approve</a>
+                    <a href="{% url 'reject_request' req.id %}"
+                       class="text-red-400 hover:underline">Reject</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="text-center py-4 text-gray-400">No pending requests.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- Modal لإضافة/تعديل المنتج -->
+<div id="productModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+    <div class="bg-[#2c1a1a] p-6 rounded-2xl w-1/3">
+        <h2 id="modalTitle" class="text-2xl mb-4 text-white">Add Product</h2>
+        <form id="productForm" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="product_id" id="product_id">
+            <div class="mb-4">
+                <label for="name" class="block mb-1 text-white">Name:</label>
+                <input type="text" name="name" id="name" class="w-full p-2 rounded text-black" required>
+            </div>
+            <div class="mb-4">
+                <label for="quantity" class="block mb-1 text-white">Quantity:</label>
+                <input type="number" name="quantity" id="quantity" class="w-full p-2 rounded text-black" required>
+            </div>
+            <div class="mb-4">
+                <label for="critical_amount" class="block mb-1 text-white">Critical Amount:</label>
+                <input type="number" name="critical_amount" id="critical_amount" class="w-full p-2 rounded text-black" required>
+            </div>
+            <div class="flex justify-end gap-2">
+                <button type="button" onclick="closeProductModal()" class="px-4 py-2 bg-gray-600 rounded">Cancel</button>
+                <button type="submit" class="px-4 py-2 bg-green-700 rounded hover:bg-green-800">Add Product</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+function openProductModal(productId = null) {
+    document.getElementById('productForm').reset();
+    document.getElementById('product_id').value = '';
+    document.getElementById('modalTitle').innerText = productId ? 'Edit Product' : 'Add Product';
+
+    if (productId) {
+        fetch(`/products/get/${productId}/`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('product_id').value = data.id;
+                document.getElementById('name').value = data.name;
+                document.getElementById('quantity').value = data.quantity;
+                document.getElementById('critical_amount').value = data.critical_amount;
+            });
+    }
+    document.getElementById('productModal').classList.remove('hidden');
+}
+
+function closeProductModal() {
+    document.getElementById('productModal').classList.add('hidden');
+}
+
+document.getElementById('productForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const productId = document.getElementById('product_id').value;
+    const url = productId ? `/products/update/${productId}/` : `/products/create/`;
+    const formData = new FormData(this);
+
+    fetch(url, {
+        method: 'POST',
+        body: formData,
+        headers: {'X-Requested-With': 'XMLHttpRequest'}
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            location.reload();
+        } else {
+            alert('Error: ' + data.error);
+        }
+    });
+});
+</script>
+{% endblock %}

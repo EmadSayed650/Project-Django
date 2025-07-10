@@ -5,7 +5,9 @@
     <p class="text-yellow-400 mb-6">You are logged in as an Employee.</p>
 
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-      <a href="{% url 'employee_orders' %}" class="bg-[#4a2121] hover:bg-[#5b2a2a] p-6 rounded-xl text-center shadow-md transition">
+      <!-- Orders -->
+      <a href="{% url 'employee_orders' %}" 
+         class="bg-[#4a2121] hover:bg-[#5b2a2a] p-6 rounded-xl text-center shadow-md transition">
         <h2 class="text-xl font-semibold mb-2">📦 Orders</h2>
         <p class="text-sm text-gray-300">View your assigned orders.</p>
       </a>
@@ -15,10 +17,13 @@
         <p class="text-sm text-gray-300">Track shipments you're responsible for.</p>
       </a>
 
-      <a href="{% url 'employee_inventory' %}" class="bg-[#4a2121] hover:bg-[#5b2a2a] p-6 rounded-xl text-center shadow-md transition">
+      <!-- Inventory (Dynamic Link for Employee) -->
+      <a href="{% url 'employee_inventory' %}" 
+         class="bg-[#4a2121] hover:bg-[#5b2a2a] p-6 rounded-xl text-center shadow-md transition">
         <h2 class="text-xl font-semibold mb-2">📊 Inventory</h2>
         <p class="text-sm text-gray-300">View available stock items.</p>
       </a>
     </div>
   </div>
 {% endblock %}
+
