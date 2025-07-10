@@ -3,7 +3,7 @@
 <div class="p-8 text-white">
     <h1 class="text-3xl font-bold mb-6">Inventory (Manager View)</h1>
 
-    <!-- أزرار البحث والإضافة -->
+    
     <div class="flex justify-between items-center mb-4">
         <form method="GET" class="flex gap-2">
             <input type="text" name="q" placeholder="Search products..." value="{{ search_query }}"
@@ -15,7 +15,7 @@
         </button>
     </div>
 
-    <!-- جدول المنتجات -->
+   
     <div class="overflow-x-auto bg-[#2c1a1a] p-4 rounded-2xl shadow-lg mb-6">
         <table class="min-w-full text-white rounded-xl">
             <thead class="bg-[#4a2121]">
@@ -61,7 +61,7 @@
         {% endif %}
     </div>
 
-    <!-- الطلبات المعلقة -->
+ 
     <h2 class="text-xl font-semibold mb-3">Pending Product Requests</h2>
     <table class="min-w-full text-white rounded-xl">
         <thead class="bg-[#4a2121]">
