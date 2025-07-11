@@ -179,7 +179,8 @@ STATICFILES_DIRS = [
     BASE_DIR / "static", 
     BASE_DIR / "home/static",  
 ]
-STATIC_ROOT = '/home/mohamedabdo/Project-Django/staticfiles'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
 
 
 # Default primary key field type
