@@ -182,11 +182,15 @@ USE_TZ = True
 # STATIC_ROOT = str(BASE_DIR / 'staticfiles')
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    str(BASE_DIR / "static"),
-]
 
-STATIC_ROOT = BASE_DIR / "staticfiles"
+
+if DEBUG:
+    STATICFILES_DIRS = [
+        BASE_DIR / "static",
+    ]
+else:
+    STATIC_ROOT = BASE_DIR / 'staticfiles'
+
 
 
 
