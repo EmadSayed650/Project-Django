@@ -19,17 +19,26 @@
     <div class="bg-[#2d1a1a] text-white p-6 rounded-xl shadow-md w-80">
       <h2 class="text-xl font-semibold mb-2">View Employees</h2>
       <p class="text-sm text-[#cc8e8e] mb-4">Check the list of current employees.</p>
-      <a href="#" class="block bg-[#6a2f2f] hover:bg-[#883838] text-center text-white py-2 rounded-md">
+      <a href="{% url 'view_employees' %}" class="block bg-[#6a2f2f] hover:bg-[#883838] text-center text-white py-2 rounded-md">
         👥 View Employees
       </a>
     </div>
 
-    <!-- Card: Inventory (مستقبلاً) -->
-    <div class="bg-[#2d1a1a] text-white p-6 rounded-xl shadow-md w-80">
-      <h2 class="text-xl font-semibold mb-2">Inventory</h2>
-      <p class="text-sm text-[#cc8e8e] mb-4">Manage and track your inventory here.</p>
-      <a href="#" class="block bg-[#6a2f2f] hover:bg-[#883838] text-center text-white py-2 rounded-md">
-        📦 Go to Inventory
+    <!-- Card: Inventory -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <a href="{% url 'orders:order_list' %}" class="bg-[#4a2121] hover:bg-[#5b2a2a] p-6 rounded-xl text-center shadow-md transition">
+        <h2 class="text-xl font-semibold mb-2">📦 Orders</h2>
+        <p class="text-sm text-gray-300">View your assigned orders.</p>
+      </a>
+
+      <a href="{% url 'manager_shipments' %}" class="bg-[#4a2121] hover:bg-[#5b2a2a] p-6 rounded-xl text-center shadow-md transition">
+        <h2 class="text-xl font-semibold mb-2">🚚 Shipments</h2>
+        <p class="text-sm text-gray-300">Track shipments you're responsible for.</p>
+      </a>
+
+      <a href="{% url 'manager_inventory' %}" class="bg-[#4a2121] hover:bg-[#5b2a2a] p-6 rounded-xl text-center shadow-md transition">
+        <h2 class="text-xl font-semibold mb-2">📊 Inventory</h2>
+        <p class="text-sm text-gray-300">View available stock items.</p>
       </a>
     </div>
 
