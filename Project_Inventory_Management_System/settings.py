@@ -27,7 +27,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-1_k+sw+w_f+e%n
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['mohamedabdo.pythonanywhere.com']
+ALLOWED_HOSTS = ['.pythonanywhere.com','mohamedabdo.pythonanywhere.com']
 
 MEDIA_URL = '/media/'
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -68,9 +68,11 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -172,7 +174,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static", 
     BASE_DIR / "home/static",  
@@ -188,3 +190,12 @@ LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = '/'  
 LOGOUT_REDIRECT_URL = 'login'
 AUTH_USER_MODEL = 'users.CustomUser' # To tell Django to use this user
+
+
+# Security settings for production
+SECURE_HSTS_SECONDS = 31536000  # Force browser to use HTTPS
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+SECURE_SSL_REDIRECT = True  # Redirect HTTP -> HTTPS
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
