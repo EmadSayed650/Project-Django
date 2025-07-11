@@ -182,10 +182,12 @@ USE_TZ = True
 # STATIC_ROOT = str(BASE_DIR / 'staticfiles')
 
 STATIC_URL = '/static/'
+
+# لا تضيف مسارات مش موجودة
 STATICFILES_DIRS = [
-    str(BASE_DIR / "static"), 
-    str(BASE_DIR / "home/static"),  
+    '/home/mohamedabdo/Project-Django/static',
 ]
+
 STATIC_ROOT = '/home/mohamedabdo/Project-Django/staticfiles'
 
 
