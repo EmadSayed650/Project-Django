@@ -1,3 +1,4 @@
+from django.contrib import messages 
 from django.urls import path, include
 from django.shortcuts import redirect, render, get_object_or_404
 from .models import Order
@@ -54,7 +55,6 @@ def confirm_order(request, order_id):
 
     return render(request, 'orders/confirm_order.html', {'form': form, 'order': order})
 
-# --------------------------------------------------------
 
 @user_passes_test(is_manager)
 def edit_order(request, order_id):

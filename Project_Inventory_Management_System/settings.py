@@ -34,8 +34,8 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # Application definition
 
 INSTALLED_APPS = [
-    'widget_tweaks',
     'orders',
+    'widget_tweaks',
     'users.apps.UsersConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -97,15 +97,14 @@ DATABASES = {
 
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'inventory1',
-#         'USER': 'inventory1',
-#         'PASSWORD': 'inventory1',
-#         'HOST': 'localhost',  # or your DB host
-#         'PORT': '5432',        # default PostgreSQL port
+#         'ENGINE': 'django.db.backends.postgresql',  # Engine for PostgreSQL
+#         'NAME': 'test',                             # Name of your database
+#         'USER': 'test',                             # Your PostgreSQL username
+#         'PASSWORD': 'test1234',                     # Your PostgreSQL password
+#         'HOST': 'localhost',                        # Database server address
+#         'PORT': '5432',                             # Default port for PostgreSQL
 #     }
 # }
-
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
