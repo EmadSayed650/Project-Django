@@ -36,7 +36,9 @@ MEDIA_ROOT = BASE_DIR / 'media'
 INSTALLED_APPS = [
     'orders',
     'widget_tweaks',
+    'products.apps.ProductsConfig',
     'users.apps.UsersConfig',
+    'shipments.apps.ShipmentsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -74,9 +76,21 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Project_Inventory_Management_System.wsgi.application'
 
+#Mohamed create a database for the project
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',   
+#         'NAME': 'inventory_DB',             
+#         'USER': 'inventory_user',                 
+#         'PASSWORD': '01006641942',               
+#         'HOST': '127.0.0.1',                       
+#         'PORT': '5432',                            
+#     }
+# }
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
+
 
 # DATABASES = {
 #     'default': {
@@ -94,6 +108,23 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'inventory_db',
+#         'USER': 'inventory_user',
+#         'PASSWORD': '1067858110',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#     }
+# }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 # DATABASES = {
 #     'default': {

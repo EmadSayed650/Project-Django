@@ -1,0 +1,73 @@
+{% extends 'base.html' %} {% block content %}
+<div class="p-6">
+  <h2 class="text-2xl font-bold text-white mb-4">All Shipments</h2>
+
+  {% if request.user.role == 'employee' %}
+  <a
+    href="{% url 'shipments:add_shipment' %}"
+    class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 mb-4 inline-block"
+    >Add Shipment</a
+  >
+  {% endif %}
+
+  <table class="w-full bg-white rounded shadow overflow-hidden">
+    <thead class="bg-gray-800 text-white">
+      <tr class="text-white bg-[#4a2121]">
+        <th class="px-4 py-2">Factory Name</th>
+        <th class="px-4 py-2">Item Name</th>
+        <th class="px-4 py-2">Quantity</th>
+        <th class="px-4 py-2">Shipment Date</th>
+        <th class="px-4 py-2">Status</th>
+        {% if request.user.role == 'manager' %}
+        <th class="px-4 py-2">Actions</th>
+        {% endif %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for shipment in shipments %}
+      <tr
+        class="border-b text-white bg-[#2e1818] hover:bg-[#3a1f1f] transition"
+      >
+        <td class="p-2">{{ shipment.factory_name }}</td>
+        <td class="p-2">{{ shipment.item_name }}</td>
+        <td class="p-2">{{ shipment.quantity }}</td>
+        <td class="p-2">{{ shipment.shipment_date }}</td>
+        <td class="p-2">
+          {% if shipment.status == 'pending' %}
+          <span class="text-yellow-400 font-semibold">Pending</span>
+          {% else %}
+          <span class="text-green-400 font-semibold">Confirmed</span>
+          {% endif %}
+        </td>
+        {% if request.user.role == 'manager' %}
+        <td class="p-2 flex gap-2">
+          {% if shipment.status == 'pending' %}
+          <a
+            href="{% url 'shipments:confirm_shipment' shipment.id %}"
+            class="bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-1 rounded-md transition"
+          >
+            Confirm
+          </a>
+          <a
+            href="{% url 'shipments:edit_shipment' shipment.id %}"
+            class="bg-yellow-500 hover:bg-yellow-600 text-white text-sm px-3 py-1 rounded-md transition"
+          >
+            Edit
+          </a>
+          {% else %}
+          <span class="text-sm text-gray-400">--</span>
+          {% endif %}
+        </td>
+        {% endif %}
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="6" class="text-center p-4 text-gray-500">
+          No shipments found.
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

@@ -71,12 +71,12 @@ def employee_shipments(request):
 
 @login_required
 def employee_inventory(request):
-    return render(request, 'users/employee_inventory.html')
+    return render(request, 'products/employee_inventory.html')
 
 #  the Manger pages 
 @login_required
 def manager_orders(request):
-    return render(request, 'orders/manager_orders.html')
+    return render(request, 'orders/orders.html')
 
 @login_required
 def manager_shipments(request):
