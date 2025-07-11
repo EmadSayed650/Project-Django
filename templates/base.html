@@ -51,9 +51,9 @@
                                     </a>
                                 {% elif request.user.role == 'employee' %}
                                     <a href="{% url 'orders:order_list' %}"  class="flex items-center gap-3 px-3 py-2 rounded-xl {% if request.path == '/employee/orders/' %}bg-[#4a2121]{% endif %}">
-                                    <div class="text-white">📦</div>
-                                    <p class="text-white text-sm">Orders</p>
-                                </a>
+                                        <div class="text-white">📦</div>
+                                        <p class="text-white text-sm">Orders</p>
+                                    </a>
                                 {% endif %}
 
                                
@@ -69,7 +69,7 @@
                                     class="flex items-center gap-3 px-3 py-2 rounded-xl {% if request.path == '/products/inventory/employee/' %}bg-[#4a2121]{% endif %}">
                                         <div class="text-white">📋</div>
                                         <p class="text-white text-sm">Inventory</p>
-                                </a>
+                                    </a>
                                 {% endif %}
 
 
