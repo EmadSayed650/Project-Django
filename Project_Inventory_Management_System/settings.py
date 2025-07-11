@@ -179,7 +179,8 @@ STATICFILES_DIRS = [
     BASE_DIR / "static", 
     BASE_DIR / "home/static",  
 ]
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = str(BASE_DIR / 'staticfiles')
+
 
 
 
