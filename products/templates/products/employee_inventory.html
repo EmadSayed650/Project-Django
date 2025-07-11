@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="p-8 text-white">
+    <h1 class="text-3xl font-bold mb-6">Inventory (Employee View)</h1>
+
+    <!-- add product , search-->
+    <div class="flex justify-between items-center mb-4">
+        <form method="GET" class="flex gap-2">
+            <input type="text" name="q" placeholder="Search products..." value="{{ search_query }}"
+                   class="p-2 rounded text-black" />
+            <button type="submit" class="bg-[#4a2121] px-4 py-2 rounded">Search</button>
+        </form>
+        <button type="button" onclick="document.getElementById('addProductModal').classList.remove('hidden')" class="bg-green-600 px-4 py-2 rounded text-white hover:bg-green-700">
+            + Add New Product
+        </button>
+    </div>
+
+  
+    <div class="overflow-x-auto bg-[#2c1a1a] p-4 rounded-2xl shadow-lg mb-6">
+        <table class="min-w-full text-white rounded-xl">
+            <thead class="bg-[#4a2121]">
+                <tr>
+                    <th class="px-4 py-3 text-left">ID</th>
+                    <th class="px-4 py-3 text-left">Name</th>
+                    <th class="px-4 py-3 text-left">Quantity</th>
+                    <th class="px-4 py-3 text-left">Critical Amount</th>
+                    <th class="px-4 py-3 text-left">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in page_obj %}
+                <tr class="{% if product.quantity <= product.critical_amount %}bg-yellow-200 text-black{% endif %}">
+                    <td class="px-4 py-3">{{ product.id }}</td>
+                    <td class="px-4 py-3">{{ product.name }}</td>
+                    <td class="px-4 py-3">{{ product.quantity }}</td>
+                    <td class="px-4 py-3">{{ product.critical_amount }}</td>
+                    <td class="px-4 py-3">
+                        {% if product.quantity <= product.critical_amount %}
+                        <form method="POST" action="{% url 'create_product_request' product.id %}" class="flex gap-2 items-center">
+                            {% csrf_token %}
+                            <input type="number" name="quantity" min="1" placeholder="Qty" class="w-20 p-1 rounded text-black" required>
+                            <button type="submit" class="bg-blue-700 px-3 py-1 rounded text-white hover:bg-blue-800">Request</button>
+                        </form>
+                        {% else %}
+                        <span class="text-gray-400">-</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="text-center py-4 text-red-400">No products available.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination flex gap-2 justify-center mb-6">
+        {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}&q={{ search_query }}" class="px-3 py-1 bg-gray-700 rounded">Previous</a>
+        {% endif %}
+        <span class="px-3 py-1">{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span>
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}&q={{ search_query }}" class="px-3 py-1 bg-gray-700 rounded">Next</a>
+        {% endif %}
+    </div>
+
+    
+    <h2 class="text-xl font-semibold mb-3">Your Product Requests</h2>
+    <div class="overflow-x-auto bg-[#2c1a1a] p-4 rounded-2xl shadow-lg">
+        <table class="min-w-full text-white rounded-xl">
+            <thead class="bg-[#4a2121]">
+                <tr>
+                    <th class="px-4 py-3 text-left">Product</th>
+                    <th class="px-4 py-3 text-left">Quantity</th>
+                    <th class="px-4 py-3 text-left">Status</th>
+                    <th class="px-4 py-3 text-left">Requested On</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for req in employee_requests %}
+                <tr>
+                    <td class="px-4 py-3">{{ req.product.name }}</td>
+                    <td class="px-4 py-3">{{ req.quantity }}</td>
+                    <td class="px-4 py-3">
+                        {% if req.status == 'pending' %}
+                            <span class="text-yellow-400">Pending</span>
+                        {% elif req.status == 'approved' %}
+                            <span class="text-green-400">Approved</span>
+                        {% elif req.status == 'rejected' %}
+                            <span class="text-red-400">Rejected</span>
+                        {% endif %}
+                    </td>
+                    <td class="px-4 py-3">{{ req.created_at|date:"M d, Y" }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="text-center py-4 text-gray-400">No requests made.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div id="addProductModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+    <div class="bg-[#2c1a1a] p-6 rounded-2xl w-1/3">
+        <h2 class="text-2xl mb-4 text-white">Add New Product</h2>
+        <form method="POST" >
+            {% csrf_token %}
+            <div class="mb-4">
+                <label for="id_name" class="block mb-1 text-white">Name:</label>
+                <input type="text" name="name" id="id_name" class="w-full p-2 rounded text-black" required>
+            </div>
+            <div class="mb-4">
+                <label for="id_quantity" class="block mb-1 text-white" >Quantity:</label>
+                <input type="number" name="quantity" id="id_quantity" class="w-full p-2 rounded text-black" required>
+            </div>
+            <div class="mb-4">
+                <label for="id_critical_amount" class="block mb-1 text-white">Critical Amount:</label>
+                <input type="number" name="critical_amount" id="id_critical_amount" class="w-full p-2 rounded text-black" required>
+            </div>
+            <div class="flex justify-end gap-2">
+                <button type="button" onclick="document.getElementById('addProductModal').classList.add('hidden')" class="px-4 py-2 bg-gray-600 rounded">Cancel</button>
+                <button type="submit" class="px-4 py-2 bg-green-700 rounded hover:bg-green-800">Add Product</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+

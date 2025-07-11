@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="max-w-2xl mx-auto bg-[#2e1818] p-6 rounded-lg shadow-md text-white mt-6">
+    <h2 class="text-2xl font-bold mb-4 text-center">Confirm Order</h2>
+
+    <div class="mb-6 space-y-2">
+        <p><span class="font-semibold">Order ID:</span> {{ order.order_id }}</p>
+        <p><span class="font-semibold">Supermarket:</span> {{ order.supermarket }}</p>
+        <p><span class="font-semibold">Created By:</span> {{ order.created_by }}</p>
+        <p><span class="font-semibold">Order Date:</span> {{ order.order_date|date:"Y-m-d" }}</p>
+        <p>
+            <span class="font-semibold">Current Status:</span>
+            {% if order.status == 'Pending' %}
+                <span class="text-yellow-400 font-semibold">Pending</span>
+            {% else %}
+                <span class="text-green-400 font-semibold">{{ order.status }}</span>
+            {% endif %}
+        </p>
+    </div>
+
+    <form method="POST" class="space-y-4">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        <div>
+            <label for="{{ form.status.id_for_label }}" class="block text-sm font-semibold text-white mb-2">
+                Update Status
+            </label>
+            {{ form.status }}
+            {% if form.status.errors %}
+                <p class="text-sm text-red-400 mt-1">{{ form.status.errors.0 }}</p>
+            {% endif %}
+        </div>
+
+        <button type="submit"
+            class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition">
+            ✅ Confirm Order
+        </button>
+
+        <a href="{% url 'orders:order_list' %}"
+           class="block text-center text-gray-300 hover:underline mt-2">
+            ⬅ Back to Orders
+        </a>
+    </form>
+</div>
+
+{% endblock %}

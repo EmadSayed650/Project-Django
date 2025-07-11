@@ -2,22 +2,55 @@
 {% load static %}
 
 {% block content %}
-<h1 class="text-2xl font-bold text-white mb-4">Add / Edit Product</h1>
+<div class="flex justify-center w-full min-h-screen items-center py-6 sm:py-0">
+    <div class="bg-[#3a1c1c] p-8 rounded-2xl shadow-xl w-full max-w-md">
 
-<form method="post" class="bg-[#3a1c1c] p-6 rounded-lg shadow-lg max-w-md">
-    {% csrf_token %}
-    {{ form.as_p }}
+        <h1 class="text-3xl font-bold text-white mb-6 text-center">
+            {% if form.instance.pk %}Edit Product{% else %}Add Product{% endif %}
+        </h1>
 
-    <div class="flex gap-2 mt-4">
-        <button type="submit"
-                class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">
-            Save
-        </button>
-        <a href="{% url 'product_list' %}"
-           class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700">
-            Cancel
-        </a>
+        <form method="post" class="flex flex-col gap-6">
+            {% csrf_token %}
+
+            {# Custom rendering of form fields for precise styling (as discussed before, ensure widgets are styled in forms.py) #}
+            {% for field in form %}
+                <div class="flex flex-col">
+                    <label for="{{ field.id_for_label }}" class="text-white text-lg font-medium mb-2">
+                        {{ field.label }}
+                    </label>
+                    {{ field }} {# This {{ field }} needs its classes applied via forms.py or widget-tweaks #}
+                    {% if field.help_text %}
+                        <p class="text-gray-400 text-sm mt-2">{{ field.help_text }}</p>
+                    {% endif %}
+                    {% for error in field.errors %}
+                        <p class="text-red-300 text-sm mt-1">{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+
+            {% if form.non_field_errors %}
+                <div class="text-red-300 text-sm mb-4">
+                    {% for error in form.non_field_errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <div class="flex flex-col sm:flex-row gap-4 mt-6">
+                {# Save Button: Using a darker red/brown from your palette or a slightly brighter accent #}
+                <button type="submit"
+                    class="flex-1 bg-[#4a2121] hover:bg-[#5a2828] text-white font-semibold py-3 rounded-lg transition-colors duration-200 text-center">
+                    Save
+                </button>
+                {# Cancel Button: Using a slightly different shade of the background or a subtle gray/brown #}
+                <a href="{% url 'product_list' %}"
+                    class="flex-1 bg-[#2c1a1a] hover:bg-[#3d2020] text-white font-semibold py-3 rounded-lg text-center transition-colors duration-200">
+                    Cancel
+                </a>
+            </div>
+        </form>
     </div>
-</form>
+</div>
 {% endblock %}
+
 

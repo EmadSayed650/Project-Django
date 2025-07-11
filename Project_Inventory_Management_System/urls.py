@@ -21,7 +21,13 @@ from django.shortcuts import redirect
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/', include('users.urls')),
+    path('shipments/', include('shipments.urls')),
     path('', include('users.urls')),
+<<<<<<< HEAD
+=======
+    path('orders/', include('orders.urls')),
+    path('products/', include('products.urls')),
+>>>>>>> 74984d284740ffff9058319b0473ac3ad0f227a0
 ]
 from django.conf import settings
 from django.conf.urls.static import static

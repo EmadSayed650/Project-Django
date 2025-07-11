@@ -20,12 +20,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-1_k+sw+w_f+e%nn)hy_4kq(e6p!cu_v^5cm$xt(_g$^%8t!5=^'
+# SECRET_KEY = 'django-insecure-1_k+sw+w_f+e%nn)hy_4kq(e6p!cu_v^5cm$xt(_g$^%8t!5=^'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-1_k+sw+w_f+e%nn)hy_4kq(e6p!cu_v^5cm$xt(_g$^%8t!5=^')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['mohamedabdo.pythonanywhere.com']
 
 MEDIA_URL = '/media/'
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -34,8 +35,11 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # Application definition
 
 INSTALLED_APPS = [
+    'orders',
     'widget_tweaks',
+    'products.apps.ProductsConfig',
     'users.apps.UsersConfig',
+    'shipments.apps.ShipmentsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -74,30 +78,31 @@ TEMPLATES = [
 WSGI_APPLICATION = 'Project_Inventory_Management_System.wsgi.application'
 
 #Mohamed create a database for the project
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',   
-        'NAME': 'inventory_DB',             
-        'USER': 'inventory_user',                 
-        'PASSWORD': '01006641942',               
-        'HOST': '127.0.0.1',                       
-        'PORT': '5432',                            
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',   
+#         'NAME': 'inventory_DB',             
+#         'USER': 'inventory_user',                 
+#         'PASSWORD': '01006641942',               
+#         'HOST': '127.0.0.1',                       
+#         'PORT': '5432',                            
+#     }
+# }
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'inventory_db',
-        'USER': 'inventory_user',
-        'PASSWORD': '1067858110',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-}
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'inventory_db',
+#         'USER': 'inventory_user',
+#         'PASSWORD': '1067858110',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#     }
+# }
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
@@ -108,14 +113,30 @@ DATABASES = {
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'inventory1',
-#         'USER': 'inventory1',
-#         'PASSWORD': 'inventory1',
-#         'HOST': 'localhost',  # or your DB host
-#         'PORT': '5432',        # default PostgreSQL port
+#         'NAME': 'inventory_db',
+#         'USER': 'inventory_user',
+#         'PASSWORD': '1067858110',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
 #     }
 # }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',  # Engine for PostgreSQL
+#         'NAME': 'test',                             # Name of your database
+#         'USER': 'test',                             # Your PostgreSQL username
+#         'PASSWORD': 'test1234',                     # Your PostgreSQL password
+#         'HOST': 'localhost',                        # Database server address
+#         'PORT': '5432',                             # Default port for PostgreSQL
+#     }
+# }
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
@@ -155,6 +176,7 @@ STATICFILES_DIRS = [
     BASE_DIR / "static", 
     BASE_DIR / "home/static",  
 ]
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 

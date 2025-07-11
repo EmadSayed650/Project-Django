@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2 class="text-white text-2xl font-bold mb-6 text-center">Create New Order</h2>
+
+<form method="POST" class="bg-[#2e1a1a] p-6 rounded-2xl shadow-lg w-full max-w-xl mx-auto space-y-5">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+
+    <div>
+        <label for="{{ form.supermarket.id_for_label }}" class="block text-sm font-semibold text-white mb-2">
+            Select Supermarket
+        </label>
+        {{ form.supermarket }}
+        {% if form.supermarket.errors %}
+            <p class="text-sm text-red-400 mt-1">{{ form.supermarket.errors.0 }}</p>
+        {% endif %}
+    </div>
+
+    <button type="submit"
+        class="w-full bg-[#cc8e8e] hover:bg-[#a26c6c] text-[#231010] font-bold py-2 px-4 rounded-xl transition duration-300">
+        ➕ Create Order
+    </button>
+</form>
+
+{% endblock %}
