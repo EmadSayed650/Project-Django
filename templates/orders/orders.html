@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% block content %}
+<p class="text-white">You are logged in as: {{ request.user.username }} | Role: {{ request.user.role }}</p>
+
+<h2 class="text-white text-2xl font-bold mb-6 text-center">Orders</h2>
+
+{% if request.user.role == 'employee' %}
+<a href="{% url 'orders:create_order' %}"
+    class="inline-block bg-[#cc8e8e] hover:bg-[#a26c6c] text-[#231010] font-bold py-2 px-5 rounded-xl transition duration-300 shadow-sm mb-6">
+    ➕ Create Order
+</a>
+{% endif %}
+
+<table class="min-w-full divide-y divide-gray-700">
+    <thead>
+        <tr class="bg-[#4a2121] text-white text-sm">
+            <th class="px-6 py-3 text-left">Order ID</th>
+            <th class="px-6 py-3 text-left">Supermarket</th>
+            <th class="px-6 py-3 text-left">Created By</th>
+            <th class="px-6 py-3 text-left">Order Date</th>
+            <th class="px-6 py-3 text-left">Status</th>
+            {% if request.user.role == 'manager' %}
+            <th class="px-6 py-3 text-left">Actions</th>
+            {% endif %}
+        </tr>
+    </thead>
+    <tbody class="divide-y divide-gray-700">
+        {% for order in page_obj %}
+        <tr class="bg-[#2e1818] hover:bg-[#3a1f1f] text-white">
+            <td class="px-6 py-4">{{ order.order_id }}</td>
+            <td class="px-6 py-4">{{ order.supermarket }}</td>
+            <td class="px-6 py-4">{{ order.created_by }}</td>
+            <td class="px-6 py-4">{{ order.order_date|date:"Y-m-d" }}</td>
+            <td class="px-6 py-4">
+                {% if order.status == 'Pending' %}
+                <span class="text-yellow-400 font-semibold">Pending</span>
+                {% else %}
+                <span class="text-green-400 font-semibold">{{ order.status }}</span>
+
+                {% endif %}
+            </td>
+            {% if request.user.role == 'manager' %}
+            <td class="px-6 py-4">
+                {% if order.status == 'Pending' %}
+                <a href="{% url 'orders:confirm_order' order.order_id %}"
+                    class="bg-blue-500 hover:bg-blue-600 text-white text-xs px-3 py-1 rounded-md mr-2">
+                    Confirm
+                </a>
+                <a href="{% url 'orders:edit_order' order.order_id %}"
+                    class="bg-yellow-500 hover:bg-yellow-600 text-white text-xs px-3 py-1 rounded-md">
+                    Edit
+                </a>
+                {% else %}
+                <span class="text-gray-400 text-sm">--</span>
+                {% endif %}
+            </td>
+            {% endif %}
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="{% if request.user.role == 'manager' %}6{% else %}5{% endif %}"
+                class="text-center p-4 text-gray-500">No orders found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div class="pagination mt-4 text-white text-center">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+        <a href="?page=1" class="mr-2 underline">First</a>
+        <a href="?page={{ page_obj.previous_page_number }}" class="mr-2 underline">Previous</a>
+        {% endif %}
+
+        <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}" class="ml-2 underline">Next</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}" class="ml-2 underline">Last</a>
+        {% endif %}
+    </span>
+</div>
+
+{% endblock %}

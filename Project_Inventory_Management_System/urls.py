@@ -23,6 +23,7 @@ urlpatterns = [
     path('users/', include('users.urls')),
     path('shipments/', include('shipments.urls')),
     path('', include('users.urls')),
+    path('orders/', include('orders.urls')),
     path('products/', include('products.urls')),
 ]
 from django.conf import settings

@@ -34,6 +34,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # Application definition
 
 INSTALLED_APPS = [
+    'orders',
     'widget_tweaks',
     'products.apps.ProductsConfig',
     'users.apps.UsersConfig',
@@ -76,19 +77,37 @@ TEMPLATES = [
 WSGI_APPLICATION = 'Project_Inventory_Management_System.wsgi.application'
 
 #Mohamed create a database for the project
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',   
-        'NAME': 'inventory_DB',             
-        'USER': 'inventory_user',                 
-        'PASSWORD': '01006641942',               
-        'HOST': '127.0.0.1',                       
-        'PORT': '5432',                            
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',   
+#         'NAME': 'inventory_DB',             
+#         'USER': 'inventory_user',                 
+#         'PASSWORD': '01006641942',               
+#         'HOST': '127.0.0.1',                       
+#         'PORT': '5432',                            
+#     }
+# }
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'inventory_db',
+#         'USER': 'inventory_user',
+#         'PASSWORD': '1067858110',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#     }
+# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 # DATABASES = {
 #     'default': {
@@ -109,15 +128,14 @@ DATABASES = {
 
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'inventory1',
-#         'USER': 'inventory1',
-#         'PASSWORD': 'inventory1',
-#         'HOST': 'localhost',  # or your DB host
-#         'PORT': '5432',        # default PostgreSQL port
+#         'ENGINE': 'django.db.backends.postgresql',  # Engine for PostgreSQL
+#         'NAME': 'test',                             # Name of your database
+#         'USER': 'test',                             # Your PostgreSQL username
+#         'PASSWORD': 'test1234',                     # Your PostgreSQL password
+#         'HOST': 'localhost',                        # Database server address
+#         'PORT': '5432',                             # Default port for PostgreSQL
 #     }
 # }
-
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
